@@ -26,17 +26,16 @@ namespace ForwardTest
                 test1.Test(engine, temperature);
                 test2.Test(engine, temperature);
 
-                Console.WriteLine(heatTest.Moment != 0 ? string.Format("Перегрев двигателя наступил спустя {0} секунд", heatTest.Time) : 
-                    string.Format("Крутящий момент достиг нуля при температуре {0} за время {1}", heatTest.Temperature, heatTest.Time));
+                Console.WriteLine(heatTest.Moment != 0 ? string.Format("Перегрев двигателя наступил спустя {0} секунд", Math.Round(heatTest.Time, 2)) : 
+                    string.Format("Крутящий момент достиг нуля при температуре {0} за время {1}", Math.Round(heatTest.Temperature, 2), Math.Round(heatTest.Time, 2)));
                 Console.WriteLine(string.Format("Максимальная мощность двигателя {0} кВт была достигнута " +
-                    "при скорости вращения каленвала {1} радиан/сек", powerTest.MaxPower, powerTest.MaxPowerRotation));
-                Console.ReadKey();
+                    "при скорости вращения каленвала {1} радиан/сек", Math.Round(powerTest.MaxPower, 2), Math.Round(powerTest.MaxPowerRotation, 2)));
             }
             else
             {
                 Console.WriteLine("Данные введены неверно");
-                Console.ReadKey();
             }
+            Console.ReadKey();
         }
 
         
