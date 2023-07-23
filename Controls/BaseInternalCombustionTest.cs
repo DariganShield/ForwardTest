@@ -26,29 +26,32 @@ namespace ForwardTest.Controls
         /// <param name="ambientTemperature">Температура окружающей среды</param>
         void ITest.Test(AbstractEngine model, double ambientTemperature)
         {
-            InternalCombustionEngine engine = (InternalCombustionEngine)model;
-            temperature = ambientTemperature;
-
-            while (temperature < engine.OverTemperature)
+            if (model is InternalCombustionEngine)
             {
-                sec++;
-                moment = CalculateHelper.CalculateMoment(rotationSpeed, engine.PiecewiseLinearDependence);
-                if (moment == 0)
-                {
-                    break;
-                }
-                heatingSpeed = moment * engine.HeatingSpeedDependencyTorque + 
-                    rotationSpeed * rotationSpeed * engine.HeatingSpeedDependencyRotation;
-                coolingSpeed = engine.RatioTemperatureDependancy * (ambientTemperature - temperature);
-                acceleration = moment / engine.InertiaMoment;
-                rotationSpeed += acceleration;
-                temperature += (heatingSpeed + coolingSpeed);
-                power = moment * rotationSpeed / factor;
+                InternalCombustionEngine engine = (InternalCombustionEngine)model;
+                temperature = ambientTemperature;
 
-                if (power > maxPower)
+                while (temperature < engine.OverTemperature)
                 {
-                    maxPower = power;
-                    maxPowerRotation = rotationSpeed;
+                    sec++;
+                    moment = CalculateHelper.CalculateMoment(rotationSpeed, engine.PiecewiseLinearDependence);
+                    if (moment == 0)
+                    {
+                        break;
+                    }
+                    heatingSpeed = moment * engine.HeatingSpeedDependencyTorque +
+                        rotationSpeed * rotationSpeed * engine.HeatingSpeedDependencyRotation;
+                    coolingSpeed = engine.RatioTemperatureDependancy * (ambientTemperature - temperature);
+                    acceleration = moment / engine.InertiaMoment;
+                    rotationSpeed += acceleration;
+                    temperature += (heatingSpeed + coolingSpeed);
+                    power = moment * rotationSpeed / factor;
+
+                    if (power > maxPower)
+                    {
+                        maxPower = power;
+                        maxPowerRotation = rotationSpeed;
+                    }
                 }
             }
         }
