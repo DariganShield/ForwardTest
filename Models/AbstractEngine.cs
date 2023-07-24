@@ -1,6 +1,6 @@
 ﻿namespace ForwardTest.Models
 {
-    class AbstractEngine
+    abstract class AbstractEngine
     {
         /// <summary>
         /// Имя
